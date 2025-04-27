@@ -1,0 +1,263 @@
+Classes:
+#return dictionary type objects for each class for modal boxes
+User(user_id):
+{
+    this_user = User.query.filter_by(user_id=user_id).first()
+    Username = this_user.username
+    Password = this_user.password
+    role_id =this_user.role_id
+    is_flagged=0
+    def validate_user(u_name, pwd)
+    {
+        #validates the user 
+        #returns boolean
+    }
+    def is_spons(u_name):
+    {
+        #returns boolean
+    }
+    def is_influ(u_name):
+    {
+        #returns boolean
+    }
+    def is_admin(u_name):
+    {
+        #returns boolean
+    }
+}
+#children of user:
+Sponsor(user_id):
+{
+    this_user = User.query.filter_by(user_id=user_id).first()
+    Username = this_user.username
+    Password = this_user.password
+    Industry = this_user.Industry
+    Company_name = this_user.Company_name
+    Contact_name = this_user.Contact_name
+    Contact_email = this_user.Contact_email
+    Contact_phone = this_user.Contact_phone
+
+    def 
+    def get_camp_list():
+    {
+        #returns an array of campaign type objects associated with sponsor
+    }
+    def get_influencer():
+    {
+        #returns an array of influencer type objects associated with sponsor  
+    }
+    def get_ad_list():
+    {
+        #returns an array of ad type objects associated with sponsor
+    }
+    def get_requests():
+    {
+        #returns an array of request type objects associated with sponsor
+    }
+    def Niche_wise_ad_count(user_id):
+    {
+        #return path to image
+    }
+    def Influencer_count_per_campaign(user_id)
+    {
+        #return path to image
+    }
+    def Budget_wise_campaign_pie_chart(user_id)
+    {
+        #return path to image
+    }
+    def Influencer_wise_ad_status(user_id):
+    {
+        #return path to image
+    }
+}
+Influencer(user_id):
+{
+    this_user = User.query.filter_by(user_id=user_id).first()
+    Username = this_user.username
+    Password = this_user.password
+    Contact_name = this_user.Contact_name
+    Contact_email = this_user.Contact_email
+    Contact_phone = this_user.Contact_phone
+    DOB = this_user.DOB
+    Niche = this_user.Niche
+    platform = dictionary type object, {name: reach}
+
+    def get_camp_list():
+    {
+        #returns an array of campaign type objects associated with Influencer
+    }
+    def get_sponsor():
+    {
+        #returns an array of sponsor type objects associated with Influencer  
+    }
+    def get_ad_list():
+    {
+        #returns an array of ad type objects associated with Influencer
+    }
+    def get_requests():
+    {
+        #returns an array of request type objects associated with Influencer
+    }
+    def Sponsor_spread_ads_Count(user_id):
+    {
+        #return path to image
+    }
+    def Ad_wise_revenue(user_id):
+    {
+        #return path to image
+    }
+    def Sponsor-wise_revenue(user_id):
+    {
+        #return path to image
+    }
+    def Industry-wise_ad_counts(user_id):
+    {
+        #return path to image
+    }
+}
+Admin(user_id):
+{
+    this_user = User.query.filter_by(user_id=user_id).first()
+    Username = this_user.username
+    Password = this_user.password
+
+    
+    def get_camp_list():
+    {
+        #returns an array of all campaign type objects
+    }
+    def get_sponsor():
+    {
+        #returns an array of all sponsor type objects
+    }
+    def get_influencer():
+    {
+        #returns an array of all Influencer type objects
+    }
+    def get_ad_list():
+    {
+        #returns an array of all ad type objects
+    }
+    def get_requests():
+    {
+        #returns an array of all request type objects
+    }
+    def get_ad_list_objects(type, status):
+    {
+        #returns all instances of type object and status status
+    }
+    def unflag(id,type):
+    {
+        #unflags the object of type 'type' with id 'id' 
+    }
+    def delete(id, type):
+    {
+        #deletes the object from the system
+    }
+    def all_users_object_in_sys():
+    {
+        #return path to image 
+        #Chart Displaying number of Sponsors, Influencers, campaign, and Ads in the system
+    }
+    def Industry_wise_campaign_list():
+    {
+        #return path to image
+        #no. of campaigns in each industry
+    }
+    def Niche_wise_Ads_list():
+    {
+        #return path to image
+        #no. of ads in each niche
+    }
+    def Sponsor_wise_campaign_count():
+    {
+        #return path to image
+        #number of campaigns per sponsor
+    } 
+
+}
+#conatined in sponsor but has an aggregate relationship with the influencer(influencer has a relationship)
+Campaign(Campaign_id):
+{
+    Campaign_id
+    Sponsor_id
+    Title
+    Desc
+    Img
+    Niche
+    date_created 
+    start_date
+    end_date 
+    Goal_ads 
+    Budget
+    def is_flagged(u_name):
+    {
+        #tells the user if it is flagged
+    }
+    def get_influencer():
+    {
+        #returns an array of Influencer type objects associated with the campaign
+    }
+    def get_ad_list(campaign_id):
+    {
+        #return list of ads associated with the given ID
+    }
+    def get_requests():
+    {
+        #returns an array of all request type objects
+    } 
+    def requests()
+    def is_active(campaign_id):
+        #returns if the campaign is active
+}
+#contained in campaign
+Ad(Ad_id):
+{
+    Ad_id
+    Campaign_id
+    Influencer_id
+    Title
+    Desc
+    Terms
+    Status
+    Payment_amt
+    def is_flagged(u_name):
+    {
+        #tells the user if it is flagged
+    }
+    def is_active():
+    {
+        #returns if the object is active
+    }
+    def requests(Ad_id):
+    {
+        #return list of requests associated with the given ID
+    }
+}
+#contained in Ad
+request(req_id):
+{
+    Req_id
+    Ad_id
+    requester_id
+    responser_id
+    Status
+    Payment_amt
+    req_date
+    message_req
+    message_resp
+    def pay(amt):
+    {
+        #edits payment amount for request
+    }
+    def is_flagged(u_name):
+    {
+        #tells the user if it is flagged
+    }
+    def is_active():
+    {
+        #returns if the object is active
+    }
+}
+

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sponsor's Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-nav ml-auto"><a class="nav-link" href="/user/{{user}}">Sponsor Dashboard</a></div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="/user/{{user}}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/{{user}}/Campaign">Campaign</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/{{user}}/find">Find</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/{{user}}/stat">Stat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<main class="text-center">
+  <p class="h2">Welcome {{user}}</p>
+  <div class="container">
+    <div class="section">
+      <p class="h3">Active Campaigns</p>
+      <table class="table">
+        <thead>
+          <tr><p class="h4">
+            <th>Campaign</th>
+            <th>Progress</th>
+            <th>Action</th>
+            </p></tr>
+        </thead>
+        <tbody>
+          {%if active_campaigns==[]%}
+          </tbody></table><p>~No campaigns</p>
+          {%endif%}
+          {% for campaign in active_campaigns %}
+          {% if campaign.status=="active" %}
+          <tr>
+            <td>{{ campaign.Title }}</td>
+            <td>{{ campaign.progress}}%</td>
+            <td style="text-align: center;">
+              <button type="button" class="view-button-campaign" data-bs-toggle="modal" data-bs-target="#campaignModal-{{campaign.Campaign_id}}" 
+                data-campaign-id= "{{campaign.Campaign_id}}"
+                data-campaign-title= "{{campaign.Title}}"
+                data-campaign-desc= "{{campaign.Desc}}"
+                data-campaign-progress="{{campaign.progress}}" 
+                data-campaign-niche="{{ campaign.Niche }}" 
+                data-campaign-status="{{ campaign.status }}" 
+                data-campaign-start-date="{{ campaign.start_date }}" 
+                data-campaign-end-date="{{ campaign.end_date }}" 
+                data-campaign-goal-ads="{{ campaign.Goal_ads }}" 
+                data-campaign-budget="{{ campaign.Budget }}"><i class="fa fa-eye">View</i></button>
+                </td>
+          </tr>
+          <!-- view Modal -->
+    <div class="modal" id="campaignModal-{{campaign.Campaign_id}}" tabindex="-1" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="campaignModalLabel"> <span id="campaign-title"> </span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Display campaign details here -->
+            Description: <span id="campaign-desc"></span><br>
+            Progress: <span id="campaign-progress"></span><br>
+            Niche: <span id="campaign-niche"></span><br>
+            Status: <span id="campaign-status"></span><br>
+            Start date: <span id="campaign-start-date"></span><br>
+            End date: <span id="campaign-end-date"></span><br>
+            Goal ads: <span id="campaign-goal-ads"></span><br>
+            Budget: <span id="campaign-budget"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--modal end-->
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="section">
+      <p class="h3">Recieved Requests</p>
+      <table class="table">
+        <thead>
+          <tr><p class="h4">
+            <th>Campaign</th>
+            <th>request from</th>
+            <th>Action</th>
+            </p></tr>
+        </thead>
+        <tbody>
+          {%if recieved_requests==[]%}
+          </tbody></table><p>~No recieved requests</p>
+          {%endif%}
+          {% for request in recieved_requests %}
+          <tr>
+            <td>{{ request.camp_name }}</td>
+            <td>{{ request.requester_name }}</td>
+            <td>
+              <button type="button" class="view-button-req" data-bs-toggle="modal" data-bs-target="#reqModal-{{request.Req_id}}" 
+              data-req-id= "{{request.Req_id}}"
+              data-camp-name="{{request.camp_name}}"
+              data-ad-name="{{request.Ad_name}}"
+              data-req-name="{{request.requester_name}}"
+              data-res-name="{{request.responser_name}}"
+              data-status = "{{request.Status}}"
+              data-payment-amt = "{{request.payment_amt}}"
+              data-req-msg = "{{request.message_req}}"
+              data-res-msg = "{{request.message_resp}}"><i class="fa fa-eye">View</i></button>
+              <button class="accept-button"><i class="fa fa-check">Accept</i></button>
+              <button class="reject-button"><i class="fa fa-times">Reject</i></button>
+            </td>
+          </tr>
+          <!-- view req Modal -->
+    <div class="modal" id="reqModal-{{request.Req_id}}" tabindex="-1" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reqModalLabel"> Request for <span id="ad-name"> </span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/user/{{user}}" method="post">
+              <!-- Display campaign details here -->
+              Campaign name: <span id="camp-name"></span><br>
+              requestor name: <span id="req-name"></span><br>
+              responser name: <span id="res-name"></span><br>
+              Status: <span id="status"></span><br>
+              Terms: <span id="terms"></span><br>
+              Payment amt: <input type="number" class="form-control" name= "payment" value="{{ request.Payment_amt }}"><br>
+              Msg recieved: <span id="req-msg"></span><br>
+              Your msg: <input type="text" class="form-control" name= "msg" value="{{ request.message_resp}}"></span></span><br>
+              <input type="hidden" name="id" value="{{request.Req_id}}">
+              <input type="hidden" name="type" value="Negotiate">
+              <input type="submit" value="Negotiate">
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--modal end-->
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="section"></div>
+      <p class="h3">Sent Requests</p>
+      <table class="table">
+        <thead>
+          <tr><p class="h4">
+            <th>Campaign</th>
+            <th>Request to</th>
+            <th>Action</th>
+            </p></tr>
+        </thead>
+        <tbody>
+          {%if sent_requests==[]%}
+          </tbody></table><p>~No sent requests</p>
+          {%endif%}
+          {% for request in sent_requests %}
+          <tr>
+            <td>{{ request.camp_name }}</td>
+            <td>{{ request.responser_name }}</td>
+            <td>
+              <button type="button" class="view-button-req" data-bs-toggle="modal" data-bs-target="#reqModal-{{request.Req_id}}" 
+              data-req-id= "{{request.Req_id}}"
+              data-camp-name="{{request.camp_name}}"
+              data-ad-name="{{request.Ad_name}}"
+              data-req-name="{{request.requester_name}}"
+              data-res-name="{{request.responser_name}}"
+              data-status = "{{request.Status}}"
+              data-payment-amt = "{{request.Payment_amt}}"
+              data-req-msg = "{{request.message_req}}"
+              data-res-msg = "{{request.message_resp}}"><i class="fa fa-eye">View</i></button>
+            </td>
+          </tr>
+          <!-- view req Modal -->
+    <div class="modal" id="reqModal-{{request.Req_id}}" tabindex="-1" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reqModalLabel"> Request for <span id="ad-name"> </span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Display campaign details here -->
+            Campaign name: <span id="camp-name"></span><br>
+            requestor name: <span id="req-name"></span><br>
+            responser name: <span id="res-name"></span><br>
+            Status: <span id="status"></span><br>
+            Payment amt: <span id="payment-amt"></span><br>
+            Msg recieved: <span id="res-msg"></span><br>
+            Your msg: <span id="req-msg"></span><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--modal end-->
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/static/js/modal.js"> </script> 
+    <script defer>
+      $(document).ready(function() {
+            $('.accept-button').on('click', function() {
+                var req_id= $(this).data('req-id');
+                var Ad_id= $(this).data('ad-id');
+                var camp_id= $(this).data('camp-id');
+                var user_id= $(this).data('id');
+                var u_name = $(this).data('username');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/'+ u_name + '/find',
+                    data: { type: 'accept', id: req_id },
+                    success: function() {
+                        console.log('success');
+                    }
+                });
+            });
+        });
+        $(document).ready(function() {
+            $('.reject-button').on('click', function() {
+                var req_id= $(this).data('req-id');
+                var Ad_id= $(this).data('ad-id');
+                var camp_id= $(this).data('camp-id');
+                var user_id= $(this).data('id');
+                var u_name = $(this).data('username');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/'+ u_name + '/find',
+                    data: { type: 'reject', id: req_id },
+                    success: function() {
+                        console.log('success');
+                    }
+                });
+            });
+        });
+    </script>   
+</body>
+</html>

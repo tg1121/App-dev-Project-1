@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+    <title>Influencer registration form</title>
+    <link rel="stylesheet" href="static/reg-log.css">
+</head>
+<body>
+    <h2>Influencer registration</h2>
+    <form action="/inf-reg" method="POST">
+        <div class="form-group">
+            <label class="control-label col-sm-2">Username*:</label>
+            <input type="text" class="form-control" name="usrnm" placeholder="User">
+        </div><!--username-->
+        <div class="form-group">
+            <label class="control-label col-sm-2">Password*:</label>
+            <input type="password" class="form-control" name="pwd" placeholder="Enter password">
+        </div><br><!--password-->
+	    <div class="mb-3">
+            <label>First Name:</label>
+                <input type="text" class="form-control" name="frnm" placeholder="First Name">
+            <label>Last Name:</label>
+                <input type="text" class="form-control" name="lstnm" placeholder="Last Name"><br>
+            <label>Phone Number:</label>
+                <input type="text" class="form-control" name="conph" placeholder="Phone Number"><br>
+            <label>Email ID:</label>
+                <input type="email" class="form-control" name="conem" placeholder="user@xyz.com"><br>
+            <label>Date of Birth*:</label>
+                <input type="date" id="bday" name="bday"><br>
+	    </div><br><!--POC-->
+        <div>
+	    <label>Platform Presence:</label><br>
+            <input type="checkbox" class="form-control" name="fcbk" value="Facebook">Facebook
+            <input type="text" class="form-control" name="fcbreach" placeholder="no. of followers">
+            <input type="checkbox" class="form-control" name="intgm" value="Instagram">Instagram
+            <input type="text" class="form-control" name="intreach" placeholder="no. of followers">
+            <input type="checkbox" class="form-control" name="twtr" value="Twitter">Twitter
+            <input type="text" class="form-control" name="twtreach" placeholder="no. of followers">
+            <input type="checkbox" class="form-control" name="Utb" value="Youtube">Youtube
+            <input type="text" class="form-control" name="Utbreach" placeholder="no. of followers">
+        </div><br><!--Plat presence-->
+        <div>
+	    <label>Niche:</label>
+            <select name = "influencerNiche" id="influencerNiche">
+                <option value="fashionBeauty">Fashion and Beauty</option>
+                <option value="travel">Travel</option>
+                <option value="fitnessHealth">Fitness and Health</option>
+                <option value="foodCooking">Food and Cooking</option>
+                <option value="lifestyle">Lifestyle</option>
+                <option value="techGadgets">Tech and Gadgets</option>
+                <option value="gaming">Gaming</option>
+                <option value="parentingFamily">Parenting and Family</option>
+                <option value="diyCrafts">DIY and Crafts</option>
+                <option value="financeInvesting">Finance and Investing</option>
+                <option value="educationLearning">Education and Learning</option>
+                <option value="petCare">Pet Care</option>
+                <option value="environmentalSustainability">Environmental and Sustainability</option>
+                <option value="automotive">Automotive</option>
+                <option value="booksLiterature">Books and Literature</option>
+                <option value="musicEntertainment">Music and Entertainment</option>
+                <option value="others">Others</option>
+            </select>
+        </div><br>
+        <input type="submit">
+    </form>
+</body>
+</html>

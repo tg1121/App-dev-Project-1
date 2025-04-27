@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sponsor's Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="navbar-nav ml-auto"><a class="nav-link" href="/user/{{user}}">Sponsor Dashboard</a></div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/user/{{user}}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/user/{{user}}/Campaign">Campaign</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/{{user}}/find">Find</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/{{user}}/stat">Stat</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+<div class="main">
+    <main>
+    <h2>Welcome to your Campaigns page</h2>
+    {% if active_campaigns!=[] %}
+        <div class="container">
+          <div class="row"> 
+            {% for campaign in active_campaigns %}
+                {% if campaign.status!="flagged" %}
+            <div class="col-md-4">
+              <div class="campaign-container">
+                <h3><a href="/user/{{user}}/{{campaign.Campaign_id}}">{{ campaign.Title }}</a></h3>
+                <p>Progress: {{ campaign.progress }}</p>
+                <p>status: {{ campaign.status}}</p>
+                <button type="button" class="view-button-campaign" data-bs-toggle="modal" data-bs-target="#campaignModal-{{campaign.Campaign_id}}" 
+                data-campaign-id= "{{campaign.Campaign_id}}"
+                data-campaign-title= "{{campaign.Title}}"
+                data-campaign-desc= "{{campaign.Desc}}"
+                data-campaign-progress="{{campaign.progress}}" 
+                data-campaign-niche="{{ campaign.Niche }}" 
+                data-campaign-status="{{ campaign.status }}" 
+                data-campaign-start-date="{{ campaign.start_date }}" 
+                data-campaign-end-date="{{ campaign.end_date }}" 
+                data-campaign-goal-ads="{{ campaign.Goal_ads }}" 
+                data-campaign-budget="{{ campaign.Budget }}"><i class="fa fa-eye"></i></button>
+                <button type="button" class="edit-camp" data-bs-toggle="modal" data-bs-target="#campaigneditModal-{{campaign.Campaign_id}}" 
+                data-campaign-id= "{{campaign.Campaign_id}}"
+                data-campaign-title= "{{campaign.Title}}"
+                data-campaign-desc= "{{campaign.Desc}}"
+                data-campaign-progress="{{campaign.progress}}" 
+                data-campaign-niche="{{ campaign.Niche }}" 
+                data-campaign-status="{{ campaign.status }}" 
+                data-campaign-start-date="{{ campaign.start_date }}" 
+                data-campaign-end-date="{{ campaign.end_date }}" 
+                data-campaign-goal-ads="{{ campaign.Goal_ads }}" 
+                data-campaign-budget="{{ campaign.Budget }}" ><i class="fa fa-edit"></i></button> 
+                <button type="button" class="delete-camp" data-username="{{user}}" data-camp-id="{{campaign.Campaign_id}}" ><i class="fa fa-trash"></i></button>
+              </div>
+              </div>
+              <!-- view Modal -->
+    <div class="modal" id="campaignModal-{{campaign.Campaign_id}}" tabindex="-1" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="campaignModalLabel"> <span id="campaign-title"> </span></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- Display campaign details here -->
+              Description: <span id="campaign-desc"></span><br>
+              Progress: <span id="campaign-progress"></span><br>
+              Niche: <span id="campaign-niche"></span><br>
+              Status: <span id="campaign-status"></span><br>
+              Start date: <span id="campaign-start-date"></span><br>
+              End date: <span id="campaign-end-date"></span><br>
+              Goal ads: <span id="campaign-goal-ads"></span><br>
+              Budget: <span id="campaign-budget"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--modal end-->
+            {% endif %}
+            {% endfor %} 
+        </div>
+        </div>
+    {% else %} 
+    <div class="h4">~no campaigns~</div>
+    {% endif %}
+    <button type="button" class="add-entry-button" title="Click to Add Campaign" data-bs-toggle="modal" data-bs-target="#add-campaign-modal"> + Add Campaign </button>
+    </main>
+    <!-- add-entry-button opens a modal box that displays a form to accept inputs for creating an object of a class-->
+    <div class="modal" id="add-campaign-modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Create Campaign</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="add-campaign-form" action="/user/{{user}}/Campaign" method="post">
+                <div class="form-group">
+                  <label for="campaign-title">Campaign Title:</label>
+                  <input type="text" class="form-control" id="campaign-title" name="title">
+                </div>
+                <div class="form-group">
+                  <label for="campaign-desc">Campaign Description:</label>
+                  <textarea class="form-control" id="campaign-desc" name="desc"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="campaign-niche">Campaign Niche:</label>
+                  <select name = "campaign-niche" id="campaign-niche">
+                    <option value="fashionBeauty">Fashion and Beauty</option>
+                    <option value="travel">Travel</option>
+                    <option value="fitnessHealth">Fitness and Health</option>
+                    <option value="foodCooking">Food and Cooking</option>
+                    <option value="lifestyle">Lifestyle</option>
+                    <option value="techGadgets">Tech and Gadgets</option>
+                    <option value="gaming">Gaming</option>
+                    <option value="parentingFamily">Parenting and Family</option>
+                    <option value="diyCrafts">DIY and Crafts</option>
+                    <option value="financeInvesting">Finance and Investing</option>
+                    <option value="educationLearning">Education and Learning</option>
+                    <option value="petCare">Pet Care</option>
+                    <option value="environmentalSustainability">Environmental and Sustainability</option>
+                    <option value="automotive">Automotive</option>
+                    <option value="booksLiterature">Books and Literature</option>
+                    <option value="musicEntertainment">Music and Entertainment</option>
+                    <option value="others">Others</option>
+                </select>
+                </div>
+                <div class="form-group">
+                  <label for="campaign-start-date">Start Date:</label>
+                  <input type="date" class="form-control" id="campaign-start-date" name="start_date">
+                </div>
+                <div class="form-group">
+                  <label for="campaign-end-date">End Date:</label>
+                  <input type="date" class="form-control" id="campaign-end-date" name="end_date">
+                </div>
+                <div class="form-group">
+                  <label for="campaign-goal-ads">Goal Ads:</label>
+                  <input type="number" class="form-control" id="campaign-goal-ads" name="goal_ads">
+                </div>
+                <div class="form-group">
+                  <label for="campaign-budget">Budget:</label>
+                  <input type="number" class="form-control" id="campaign-budget" name="budget">
+                </div>
+                <input type="hidden" name="type" value="submit">
+                <input type="submit">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/static/js/modal.js"> </script>
+    <script defer>
+        $(document).ready(function() {
+            $('.delete-camp').on('click', function() {
+                var camp_id = $(this).data('camp-id')
+                var username = $(this).data('username')
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/'+ username + '/Campaign',
+                    data: { type: 'delete', id: camp_id },
+                    success: function() {
+                        console.log("success");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+    <title>Sponsor registration form</title>
+    <link rel="stylesheet" href="static/reg-log.css">
+</head>
+<body>
+    <div id="main">
+        <div id="canvas">
+            <div id="form-body">
+                <form action="/spon-reg" method="POST">
+                    <h2>Sponsor registration<h6>* are compulsory fields are</h6></h2>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2"> Username*:</label>
+                        <input type="text" class="form-control" name="usrnm" placeholder="user">
+                        <label class="control-label col-sm-2">Password*:</label>
+                        <input type="password" class="form-control" name="pwd" placeholder="Enter password">
+                    </div><br>
+                <div class="mb-3">
+                        <label>Company Name:</label>
+                        <input type="text" class="form-control" name="cmpnm" placeholder="Company Name">
+                </div><br>
+                <div class="form-group">
+                    <label>Industry:</label>
+                        <select name="sponsoringIndustries" id="sponsoringIndustries">
+                            <option value="consumerGoodsRetail">Consumer Goods and Retail</option>
+                            <option value="technologyElectronics">Technology and Electronics</option>
+                            <option value="automotive">Automotive</option>
+                            <option value="financeInsurance">Finance and Insurance</option>
+                            <option value="telecommunications">Telecommunications</option>
+                            <option value="healthcarePharmaceuticals">Healthcare and Pharmaceuticals</option>
+                            <option value="energy">Energy</option>
+                            <option value="mediaEntertainment">Media and Entertainment</option>
+                            <option value="hospitalityTravel">Hospitality and Travel</option>
+                            <option value="fashionBeauty">Fashion and Beauty</option>
+                            <option value="foodBeverage">Food and Beverage</option>
+                            <option value="constructionRealEstate">Construction and Real Estate</option>
+                            <option value="education">Education</option>
+                            <option value="others">Others</option>
+                        </select>
+                </div><br>
+                <div class="mb-3"> <h3>Point of Contact</h3>
+                    <label>Name:</label>
+                        <input type="text" class="form-control" name="nm" placeholder="Company Name"><br>
+                    <label>Phone Number:</label>
+                    <input type="text" class="form-control" name="phno" placeholder="Phone Number"><br>
+                    <label>Email ID:</label>
+                        <input type="email" class="form-control" name="email" placeholder="user@xyz.com">
+                </div><br>
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
