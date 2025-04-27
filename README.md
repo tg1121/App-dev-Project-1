@@ -22,6 +22,9 @@ The **Influencer Engagement and Sponsorship Coordination Platform** is designed 
 - Statistics screens
 - User search functionality
 
+
+**Tags**: `Python`, `Flask`, `Web Development`, `MVC`, `Database`
+  
 ## How to Run
 1. Clone the repository:
    ```bash
